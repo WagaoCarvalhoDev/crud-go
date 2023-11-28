@@ -1,10 +1,7 @@
 git init
 git add .
 git commit -m "create: controllers and routes"
-git config --global user.name WagaoCarvalho
-git config --global user.email wagaocarvalho@gmail.com
 git config --global --list --show-origin
 git branch -M main
 git remote add origin https://github.com/WagaoCarvalhoDev/crud-go.git
 git push -u origin main
-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
