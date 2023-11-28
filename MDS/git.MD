@@ -1,6 +1,6 @@
 git init
 git add .
-git commit -m "create: configurations\rest_errors\rest_error.go"
+git commit -m "create: controllers and routes"
 git config --global user.name WagaoCarvalho
 git config --global user.email wagaocarvalho@gmail.com
 git config --global --list --show-origin
