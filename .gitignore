@@ -1,0 +1,27 @@
+# Arquivos de compilação
+*.exe
+*.dll
+*.o
+*.a
+*.out
+
+# Arquivos de configuração
+*.log
+*.env
+
+# Diretórios de saída
+/bin/
+/pkg/
+
+# Arquivos de configuração específicos do Go
+go.sum
+go.mod
+
+# Arquivos temporários
+*.tmp
+
+# Arquivos de IDE
+.idea/
+
+# Binários
+/bin
