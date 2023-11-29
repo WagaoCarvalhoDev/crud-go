@@ -1,6 +1,6 @@
 git init
 git add .
-git commit -m "refactor: validations controllers/model/user_request.go"
+git commit -m "refactor: directories for singular"
 git config --global --list --show-origin
 git branch -M main
 git remote add origin https://github.com/WagaoCarvalhoDev/crud-go.git

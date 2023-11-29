@@ -1,7 +1,7 @@
 package main
 
 import (
-	"crudgo/src/controllers/routes"
+	routes "crudgo/src/controller/route"
 	"log"
 
 	"github.com/gin-gonic/gin"

@@ -1,4 +1,4 @@
-package resterrors
+package resterror
 
 import (
 	"net/http"
