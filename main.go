@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crudgo/src/configuration/rest_error/logger"
 	routes "crudgo/src/controller/route"
 	"log"
 
@@ -9,6 +10,7 @@ import (
 )
 
 func main() {
+	logger.Info("About to start user aplication")
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
