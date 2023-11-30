@@ -2,7 +2,7 @@ package main
 
 import (
 	"crudgo/src/configuration/rest_error/logger"
-	routes "crudgo/src/controller/route"
+	routes "crudgo/src/controller/routes"
 	"log"
 
 	"github.com/gin-gonic/gin"
