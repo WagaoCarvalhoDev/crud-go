@@ -5,6 +5,7 @@ import (
 	"crudgo/src/configuration/rest_error/validation"
 	"crudgo/src/controller/model/request"
 	"crudgo/src/model"
+	"crudgo/src/model/service"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -37,7 +38,9 @@ func CreateUser(c *gin.Context) {
 		userRequest.Age,
 	)
 
-	if err := domain.CreateUser(); err != nil {
+	service := service.NewUserDomainService()
+
+	if err := service.CreateUser(domain); err != nil {
 		c.JSON(err.Code, err)
 		return
 	}

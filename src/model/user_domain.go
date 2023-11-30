@@ -1,39 +1,52 @@
 package model
 
 import (
-	resterror "crudgo/src/configuration/rest_error"
-
 	"golang.org/x/crypto/bcrypt"
 )
 
-func NewUserDomain(email, password, name string, age int8) *UserDomain {
-	return &UserDomain{
+type UserDomainInterface interface {
+	GetEmail() string
+	GetPassword() string
+	GetAge() int8
+	GetName() string
+
+	EncryptPassword() error
+}
+
+func NewUserDomain(email, password, name string, age int8) UserDomainInterface {
+	return &userDomain{
 		email, password, name, age,
 	}
 }
 
-type UserDomain struct {
-	Email    string
-	Password string
-	Name     string
-	Age      int8
+type userDomain struct {
+	email    string
+	password string
+	name     string
+	age      int8
 }
 
-func (ud *UserDomain) EncryptPassword() error {
-	// Gera o hash da senha usando bcrypt
-	hash, err := bcrypt.GenerateFromPassword([]byte(ud.Password), bcrypt.DefaultCost)
+func (ud *userDomain) GetEmail() string {
+	return ud.email
+}
+
+func (ud *userDomain) GetPassword() string {
+	return ud.password
+}
+
+func (ud *userDomain) GetName() string {
+	return ud.name
+}
+
+func (ud *userDomain) GetAge() int8 {
+	return ud.age
+}
+
+func (ud *userDomain) EncryptPassword() error {
+	hash, err := bcrypt.GenerateFromPassword([]byte(ud.password), bcrypt.DefaultCost)
 	if err != nil {
 		return err
 	}
-
-	// Atualiza a senha no objeto UserDomain com o hash gerado
-	ud.Password = string(hash)
+	ud.password = string(hash)
 	return nil
-}
-
-type UserDomainInterface interface {
-	CreateUser() *resterror.RestError
-	UpdateUser(string) *resterror.RestError
-	FindUser(string) (UserDomain, *resterror.RestError)
-	DeleteUser(string) *resterror.RestError
 }

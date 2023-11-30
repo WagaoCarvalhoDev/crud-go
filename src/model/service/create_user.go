@@ -1,19 +1,20 @@
-package model
+package service
 
 import (
 	resterror "crudgo/src/configuration/rest_error"
 	"crudgo/src/configuration/rest_error/logger"
+	"crudgo/src/model"
 	"fmt"
 
 	"go.uber.org/zap"
 )
 
-func (ud *UserDomain) CreateUser() *resterror.RestError {
+func (ud *userDomainService) CreateUser(userDomain model.UserDomainInterface) *resterror.RestError {
 	logger.Info("Init createUser model ", zap.String("journey", "createUser"))
 
-	ud.EncryptPassword()
+	userDomain.EncryptPassword()
 
-	fmt.Println(ud.Password)
+	fmt.Println(userDomain.GetPassword())
 
 	return nil
 }
