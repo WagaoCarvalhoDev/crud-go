@@ -3,7 +3,7 @@ package main
 import (
 	"crudgo/src/configuration/rest_error/logger"
 	"crudgo/src/controller"
-	routes "crudgo/src/controller/routes"
+	"crudgo/src/controller/routes"
 	"crudgo/src/model/service"
 	"log"
 

@@ -1,4 +1,4 @@
-package route
+package routes
 
 import (
 	"crudgo/src/controller"
@@ -6,7 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func InitRoutes(r *gin.RouterGroup, userController controller.UserControllerInterface) {
+func InitRoutes(
+	r *gin.RouterGroup,
+	userController controller.UserControllerInterface,
+) {
 
 	r.GET("/getUserById/:userId", userController.FindUserById)
 	r.GET("/getUserByEmail/:userEmail", userController.FindUserByEmail)
