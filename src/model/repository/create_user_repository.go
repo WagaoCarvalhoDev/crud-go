@@ -5,7 +5,11 @@ import (
 	"crudgo/src/configuration/logger"
 	resterror "crudgo/src/configuration/rest_error"
 	"crudgo/src/model"
+	"crudgo/src/model/repository/entity/converter"
 	"os"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.uber.org/zap"
 )
 
 const (
@@ -15,24 +19,24 @@ const (
 func (u *userRepository) CreateUser(
 	userDomain model.UserDomainInterface,
 ) (model.UserDomainInterface, *resterror.RestError) {
-	logger.Info("Init createUser repository")
+	logger.Info("Init createUser repository",
+		zap.String("journey", "CreateUser"))
 
 	collection_name := os.Getenv(mongo_db_user)
 
 	collection := u.databaseConnection.Collection(collection_name)
 
-	value, err := userDomain.GetJSONValue()
-
-	if err != nil {
-		return nil, resterror.NewInternalServerError(err.Error())
-	}
+	value := converter.ConvertDomainToEntity(userDomain)
 
 	result, err := collection.InsertOne(context.Background(), value)
 	if err != nil {
+		logger.Error("Error trying to createUser",
+			err,
+			zap.String("journey", "createUser"))
 		return nil, resterror.NewInternalServerError(err.Error())
 	}
 
-	userDomain.SetId(result.InsertedID.(string))
+	value.Id = result.InsertedID.(primitive.ObjectID)
 
-	return userDomain, nil
+	return converter.ConvertEntityToDomain(*value), nil
 }

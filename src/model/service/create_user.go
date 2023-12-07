@@ -4,17 +4,28 @@ import (
 	"crudgo/src/configuration/logger"
 	resterror "crudgo/src/configuration/rest_error"
 	"crudgo/src/model"
-	"fmt"
 
 	"go.uber.org/zap"
 )
 
-func (ud *userDomainService) CreateUser(userDomain model.UserDomainInterface) *resterror.RestError {
+func (u *userDomainService) CreateUser(userDomain model.UserDomainInterface) (
+	model.UserDomainInterface, *resterror.RestError,
+) {
 	logger.Info("Init createUser model ", zap.String("journey", "createUser"))
 
 	userDomain.EncryptPassword()
 
-	fmt.Println(userDomain.GetPassword())
+	userDomainRepository, err := u.userRepository.CreateUser(userDomain)
+	if err != nil {
+		logger.Error("Error trying to call repository",
+			err,
+			zap.String("journey", "createUser"))
+		return nil, err
+	}
 
-	return nil
+	logger.Info("CreateUser service executed succefully",
+		zap.String("userId", userDomainRepository.GetId()),
+		zap.String("journey", "createUser"))
+
+	return userDomainRepository, nil
 }

@@ -1,10 +1,10 @@
 package main
 
 import (
+	"context"
+	"crudgo/src/configuration/database/mongodb"
 	"crudgo/src/configuration/logger"
-	"crudgo/src/controller"
 	"crudgo/src/controller/routes"
-	"crudgo/src/model/service"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -18,8 +18,16 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	service := service.NewUserDomainService()
-	userController := controller.NewUserControllerInterface(service)
+	database, err := mongodb.NewMongoDbConnection(context.Background())
+	if err != nil {
+		log.Fatalf(
+			"Error trying to connect to database, error=%s \n",
+			err.Error(),
+		)
+		return
+	}
+
+	userController := initDependencies(database)
 
 	router := gin.Default()
 
