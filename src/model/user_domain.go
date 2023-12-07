@@ -1,6 +1,9 @@
 package model
 
 import (
+	"encoding/json"
+	"fmt"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -10,43 +13,61 @@ type UserDomainInterface interface {
 	GetAge() int8
 	GetName() string
 
+	SetId(string)
+
+	GetJSONValue() (string, error)
+
 	EncryptPassword() error
 }
 
 func NewUserDomain(email, password, name string, age int8) UserDomainInterface {
 	return &userDomain{
-		email, password, name, age,
+		Email: email, Password: password, Name: name, Age: age,
 	}
+}
+
+func (u *userDomain) SetId(id string) {
+	u.Id = id
+}
+
+func (u *userDomain) GetJSONValue() (string, error) {
+	b, err := json.Marshal(u)
+	if err != nil {
+		fmt.Println(err)
+		return "", err
+	}
+	return string(b), nil
 }
 
 type userDomain struct {
-	email    string
-	password string
-	name     string
-	age      int8
+	Id       string
+	Email    string
+	Password string
+	Name     string
+	Age      int8
 }
 
-func (ud *userDomain) GetEmail() string {
-	return ud.email
+func (u *userDomain) GetEmail() string {
+	return u.Email
 }
 
-func (ud *userDomain) GetPassword() string {
-	return ud.password
+func (u *userDomain) GetPassword() string {
+	return u.Password
 }
 
-func (ud *userDomain) GetName() string {
-	return ud.name
+func (u *userDomain) GetName() string {
+	return u.Name
 }
 
-func (ud *userDomain) GetAge() int8 {
-	return ud.age
+func (u *userDomain) GetAge() int8 {
+	return u.Age
 }
 
-func (ud *userDomain) EncryptPassword() error {
-	hash, err := bcrypt.GenerateFromPassword([]byte(ud.password), bcrypt.DefaultCost)
+func (u *userDomain) EncryptPassword() error {
+	hash, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return err
 	}
-	ud.password = string(hash)
+	u.Password = string(hash)
 	return nil
 }

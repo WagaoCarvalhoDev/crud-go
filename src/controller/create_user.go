@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"crudgo/src/configuration/rest_error/logger"
-	"crudgo/src/configuration/rest_error/validation"
+	"crudgo/src/configuration/logger"
+	"crudgo/src/configuration/validation"
 	"crudgo/src/controller/model/request"
 	"crudgo/src/model"
 	"crudgo/src/view"

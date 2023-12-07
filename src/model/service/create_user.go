@@ -1,8 +1,8 @@
 package service
 
 import (
+	"crudgo/src/configuration/logger"
 	resterror "crudgo/src/configuration/rest_error"
-	"crudgo/src/configuration/rest_error/logger"
 	"crudgo/src/model"
 	"fmt"
 
